@@ -2,14 +2,11 @@
 # -*- coding: utf-8 -*
 
 """
-Usage: %(scriptName)s [OPTION]...
-
-Options:
-  -h,  --help            Prints this message
+Simple tool that report human readable informations about macOS supported AMD GPU's
 """
 
 from __future__ import unicode_literals
-#from __future__ import print_function
+from __future__ import print_function
 import plistlib
 import glob
 from helpers.pciids_repo import get_vendor_pciids
@@ -46,13 +43,13 @@ def display_kext_info(kexts_paths, pci_ids):
     for path in kexts_paths:
         kext_name = path.split('/')[4]
         macos_amd_devices = read_amd_plist(path)
-        print kext_name
+        print(kext_name)
         for device in sorted(macos_amd_devices):
             if device in pci_ids.keys():
-                print "pci {}: {}".format(device, pci_ids[device])
+                print("pci device: {} - {}".format(device, pci_ids[device]))
             else:
-                print "pci {}: {}".format(device, 'unknown device')
-        print ""
+                print("pci device: {} - {}".format(device, 'unknown device'))
+        print("")
 
 
 if __name__ == '__main__':
