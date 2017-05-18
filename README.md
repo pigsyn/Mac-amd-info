@@ -4,14 +4,22 @@ Simple tool that report human readable informations about macOS supported AMD GP
 ## Requirements
 * python2.7
 * beautifulsoup4, lxml and requests
-* `pip install beautifulsoup4 lxml requests`
+```bash
+sudo pip install beautifulsoup4 lxml requests
+```
 
 If you don't have pip available:
-* `sudo easy_install pip`
-* `sudo pip install beautifulsoup4 lxml requests`
+```bash
+sudo easy_install pip
+sudo pip install beautifulsoup4 lxml requests`
+```
 
 ## Usage
-* open terminal and run `./mac_amd_info.py` or `python2.7 mac_amd_info.py`
+* open terminal 
+```bash
+cd /path/to/Mac-amd-info
+./mac_amd_info.py
+```
 
 ## Output
 
