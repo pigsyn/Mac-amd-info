@@ -11,7 +11,7 @@ sudo pip install beautifulsoup4 lxml requests
 If you don't have pip available:
 ```bash
 sudo easy_install pip
-sudo pip install beautifulsoup4 lxml requests`
+sudo pip install beautifulsoup4 lxml requests
 ```
 
 ## Usage
