@@ -43,12 +43,12 @@ def display_kext_info(kexts_paths, pci_ids):
     for path in kexts_paths:
         kext_name = path.split('/')[4]
         macos_amd_devices = read_amd_plist(path)
-        print(kext_name)
+        print('### {}'.format(kext_name))
         for device in sorted(macos_amd_devices):
             if device in pci_ids.keys():
-                print("pci device: {} - {}".format(device, pci_ids[device]))
+                print("* pci device: {} - {}".format(device, pci_ids[device]))
             else:
-                print("pci device: {} - {}".format(device, 'unknown device'))
+                print("* pci device: {} - {}".format(device, 'unknown device'))
         print("")
 
 
