@@ -11,6 +11,7 @@ import plistlib
 import glob
 from helpers.pciids_repo import get_vendor_pciids
 
+__version__ = '0.1.1'
 
 def read_amd_plist(kext_path):
     """ Scan kext plist and exctract pciid data """

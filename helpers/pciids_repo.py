@@ -9,6 +9,8 @@ from __future__ import unicode_literals
 from __future__ import print_function
 import sys
 
+__version__ = '0.0.1'
+
 try:
     import requests
     import lxml
