@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Pci Id's stored as hex values
 
+## [0.1.2] - 2017-05-21
+### Added
+- Repport AMDLegacySupport.kext plist
+
 ## [0.1.1] - 2017-05-20
 ### Added
 - CHANGELOG.md and version numbers

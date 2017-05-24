@@ -1,3 +1,48 @@
+### AMDLegacySupport.kext
+* pci device: 6704 - Cayman PRO GL [FirePro V7900]
+* pci device: 6718 - Cayman XT [Radeon HD 6970]
+* pci device: 6719 - Cayman PRO [Radeon HD 6950]
+* pci device: 6720 - Blackcomb [Radeon HD 6970M/6990M]
+* pci device: 6722 - unknown device
+* pci device: 6738 - Barts XT [Radeon HD 6870]
+* pci device: 6739 - Barts PRO [Radeon HD 6850]
+* pci device: 6740 - Whistler [Radeon HD 6730M/6770M/7690M XT]
+* pci device: 6741 - Whistler [Radeon HD 6630M/6650M/6750M/7670M/7690M]
+* pci device: 6745 - unknown device
+* pci device: 6750 - Onega [Radeon HD 6650A/7650A]
+* pci device: 6758 - Turks XT [Radeon HD 6670/7670]
+* pci device: 6759 - Turks PRO [Radeon HD 6570/7570/8550]
+* pci device: 6760 - Seymour [Radeon HD 6400M/7400M Series]
+* pci device: 6761 - Seymour LP [Radeon HD 6430M]
+* pci device: 6768 - Caicos
+* pci device: 6770 - Caicos [Radeon HD 6450A/7450A]
+* pci device: 6779 - Caicos [Radeon HD 6450/7450/8450 / R5 230 OEM]
+* pci device: 6840 - Thames [Radeon HD 7500M/7600M Series]
+* pci device: 6841 - Thames [Radeon HD 7550M/7570M/7650M]
+* pci device: 6898 - Cypress XT [Radeon HD 5870]
+* pci device: 6899 - Cypress PRO [Radeon HD 5850]
+* pci device: 68a0 - Broadway XT [Mobility Radeon HD 5870]
+* pci device: 68a1 - Broadway PRO [Mobility Radeon HD 5850]
+* pci device: 68b0 - unknown device
+* pci device: 68b1 - unknown device
+* pci device: 68b8 - Juniper XT [Radeon HD 5770]
+* pci device: 68c0 - Madison [Mobility Radeon HD 5730 / 6570M]
+* pci device: 68c1 - Madison [Mobility Radeon HD 5650/5750 / 6530M/6550M]
+* pci device: 68d8 - Redwood XT [Radeon HD 5670/5690/5730]
+* pci device: 68d9 - Redwood PRO [Radeon HD 5550/5570/5630/6510/6610/7570]
+* pci device: 68e0 - Park [Mobility Radeon HD 5430/5450/5470]
+* pci device: 68e1 - Park [Mobility Radeon HD 5430]
+* pci device: 9440 - RV770 [Radeon HD 4870]
+* pci device: 944a - RV770/M98L [Mobility Radeon HD 4850]
+* pci device: 9488 - RV730/M96-XT [Mobility Radeon HD 4670]
+* pci device: 9490 - RV730 XT [Radeon HD 4670]
+* pci device: 94c8 - RV610/M74 [Mobility Radeon HD 2400 XT]
+* pci device: 9501 - RV670 [Radeon HD 3870]
+* pci device: 9540 - RV710 [Radeon HD 4550]
+* pci device: 9553 - RV710/M92 [Mobility Radeon HD 4530/4570/545v]
+* pci device: 9583 - RV630/M76 [Mobility Radeon HD 2600 XT/2700]
+* pci device: 9588 - RV630 XT [Radeon HD 2600 XT]
+
 ### AMD2400Controller.kext
 * pci device: 94c8 - RV610/M74 [Mobility Radeon HD 2400 XT]
 

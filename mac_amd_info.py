@@ -11,7 +11,7 @@ import plistlib
 import glob
 from helpers.pciids_repo import get_vendor_pciids
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 def read_amd_plist(kext_path):
     """ Scan kext plist and exctract pciid data """
@@ -56,9 +56,11 @@ def display_kext_info(kexts_paths, pci_ids):
 if __name__ == '__main__':
     # implement error handling
     KEXTS_PATHS = '/System/Library/Extensions/'
+    LEGACY_KEXT = glob.glob(KEXTS_PATHS + 'AMDLegacySupport.kext/Contents/Info.plist')
     CONTROLLER_KEXTS = glob.glob(KEXTS_PATHS + 'AMD*Controller.kext/Contents/Info.plist')
     GRAPHIC_KEXTS = glob.glob(KEXTS_PATHS + 'AMDRadeonX*.kext/Contents/Info.plist')
 
     AMD_DEVICES = get_vendor_pciids('1002') # 1002 is AMD
+    display_kext_info(LEGACY_KEXT, AMD_DEVICES)
     display_kext_info(CONTROLLER_KEXTS, AMD_DEVICES)
     display_kext_info(GRAPHIC_KEXTS, AMD_DEVICES)
