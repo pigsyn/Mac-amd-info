@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Pci Id's stored as hex values
 
+### Added
+- macOS High Sierra kext output
+
+## [0.1.3] - 2017-06-06
+### Fixed
+- Use sort function for consistent name ordering of kexts in output
+
 ## [0.1.2] - 2017-05-21
 ### Added
 - Report AMDLegacySupport.kext plist

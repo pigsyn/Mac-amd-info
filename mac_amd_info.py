@@ -11,7 +11,7 @@ import plistlib
 import glob
 from helpers.pciids_repo import get_vendor_pciids
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 def read_amd_plist(kext_path):
     """ Scan kext plist and exctract pciid data """
@@ -41,7 +41,7 @@ def read_amd_plist(kext_path):
 def display_kext_info(kexts_paths, pci_ids):
     """ Compares macOS amd kext devices to online pci ids DB and print output """
 
-    for path in kexts_paths:
+    for path in sorted(kexts_paths):
         kext_name = path.split('/')[4]
         macos_amd_devices = read_amd_plist(path)
         print('### {}'.format(kext_name))
