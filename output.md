@@ -148,8 +148,25 @@
 * pci device: 6939 - Tonga PRO [Radeon R9 285/380]
 * pci device: 7300 - Fiji [Radeon R9 FURY / NANO Series]
 
+### AMD9500Controller.kext
+* pci device: 67c0 - Ellesmere [Polaris10]
+* pci device: 67df - Ellesmere [Radeon RX 470/480]
+* pci device: 67e0 - Baffin [Polaris11]
+* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ff - Baffin [Polaris11]
+
 ### AMD9510Controller.kext
 * pci device: 67ef - Baffin [Radeon RX 460]
+
+### AMD9515Controller.kext
+* pci device: 67ef - Baffin [Radeon RX 460]
+
+### AMD9520Controller.kext
+* pci device: 67c0 - Ellesmere [Polaris10]
+* pci device: 67df - Ellesmere [Radeon RX 470/480]
+* pci device: 67e0 - Baffin [Polaris11]
+* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ff - Baffin [Polaris11]
 
 ### AMDRadeonX3000.kext
 * pci device: 6720 - Blackcomb [Radeon HD 6970M/6990M]
@@ -225,6 +242,17 @@
 
 ### AMDRadeonX4100.kext
 * pci device: 67e0 - Baffin [Polaris11]
+* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ff - Baffin [Polaris11]
+
+### AMDRadeonX4150.kext
+* pci device: 67e0 - Baffin [Polaris11]
+* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ff - Baffin [Polaris11]
+
+### AMDRadeonX4200.kext
+* pci device: 67c0 - Ellesmere [Polaris10]
+* pci device: 67df - Ellesmere [Radeon RX 470/480]
 * pci device: 67ef - Baffin [Radeon RX 460]
 * pci device: 67ff - Baffin [Polaris11]
 

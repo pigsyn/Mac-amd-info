@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - macOS High Sierra kext output
 
+## [0.1.4] - 2017-06-14
+### Fixed
+- Duplicates pciid's in output
+
+### Changed
+- Output for macOS 10.12.6 beta3 (16G16b)
+
 ## [0.1.3] - 2017-06-06
 ### Fixed
 - Use sort function for consistent name ordering of kexts in output
