@@ -22,7 +22,7 @@ REG_MOVB = r"(movb)\s+\$(0x[0-9a-fA-F]+)"
 
 PORT_TYPE = {'02000000': 'LVDS', '04000000': 'DDVI', '80000000': 'SVIDEO',
              '10000000': 'VGA', '00020000': 'SDVI', '00040000': 'DP',
-             '00080000': 'HDMI', '00100000': '????'}
+             '00080000': 'HDMI', '00100000': 'DMS-59'}
 
 
 def controller_kext_dis(kext_path):
@@ -78,8 +78,10 @@ def ports_reader(personalities, kext_path):
             start_offset = int(hexinfo['addr'], 16) + int(hexinfo['offset'], 16)
             bin_data.seek(start_offset)
             for i in range(hexinfo['ports'], 0, -1):
-                blob = bin_data.read(16)
-                data = struct.unpack('>iiii', blob)
+                blob = bin_data.read(24)
+                data = struct.unpack('>iiiiii', blob)
+                #print(struct.unpack('iiiiii', blob))
+
                 port_code = "{0:08x}".format(data[0])
                 if port_code in PORT_TYPE.keys():
                     ports.append(PORT_TYPE[port_code])
