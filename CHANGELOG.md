@@ -5,11 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
-- Pci Id's stored as hex values
-
 ### Added
-- macOS High Sierra kext output
+- framebuffer personalities extractor
+
+## [0.1.5] - 2017-06-15
+### Changed
+- All pci id values stored as integers
 
 ## [0.1.4] - 2017-06-14
 ### Fixed

@@ -12,7 +12,7 @@ import glob
 import re
 from helpers.pciids_repo import get_vendor_pciids
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 def read_amd_plist(kext_path):
     """ Scan kext plist and exctract pciid data """
@@ -33,19 +33,25 @@ def read_amd_plist(kext_path):
             if 'IOPCIMatch' in personalities[controller].keys():
             # just need 2 bytes from device, as a string
                 ids = personalities[controller]['IOPCIMatch']
-                ids = ids.lower().replace('1002', '').replace('0x', '').split()
+                ids = hex_to_int(ids.replace('1002', '').split())
                 device_list.extend(ids)
             else: # older amd plist files have different structure
                 ids = personalities[controller]['IONameMatch']#.split(','))
                 if isinstance(ids, list): # even older kexts have multiple strings tags
-                    ids = [i.replace('pci1002,', '') for i in ids]
+                    ids = hex_to_int([i.replace('pci1002,', '') for i in ids])
                     device_list.extend(ids)
                 else:
-                    ids = ids.split(',')[1]
+                    ids = int(ids.split(',')[1], 16)
                     device_list.append(ids)
 
 
     return device_list
+
+
+def hex_to_int(string_list):
+    """ convert list of hex strings into list of ints """
+    int_list = [int(x, 16) for x in string_list]
+    return int_list
 
 
 def display_kext_info(kexts_paths, pci_ids):
@@ -57,9 +63,10 @@ def display_kext_info(kexts_paths, pci_ids):
         print('### {}'.format(kext_name))
         for device in sorted(macos_amd_devices):
             if device in pci_ids.keys():
-                print("* pci device: {} - {}".format(device, pci_ids[device]))
+                description = pci_ids[device]
             else:
-                print("* pci device: {} - {}".format(device, 'unknown device'))
+                description = 'unknown device'
+            print("* pci device: {:x} - {}".format(device, description))
         print("")
 
 

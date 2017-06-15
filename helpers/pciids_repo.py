@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 from __future__ import print_function
 import sys
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 try:
     import requests
@@ -36,7 +36,7 @@ def get_vendor_pciids(vendor_id='1002'):
     rows = table.find_all('tr', attrs={"class" : "item"})
 
     for row in rows:
-        dev_id = row.find_all("td")[0].get_text()
+        dev_id = int(row.find_all("td")[0].get_text(), 16)
         dev_name = row.find_all("td")[1].get_text()
         #dev_comment = row.find_all("td")[2].get_text()
         device_list[dev_id] = dev_name
