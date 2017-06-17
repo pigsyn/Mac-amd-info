@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*
 
 """
-PCI ID Vendor/Device database collector
+Framebuffer extractor and video Connector reader
 """
 
 from __future__ import unicode_literals
@@ -20,8 +20,8 @@ REG_JMP = r"(jmp)\s+(0x[0-9a-fA-F]+)"
 REG_RETQ = r"(retq)"
 REG_MOVB = r"(movb)\s+\$(0x[0-9a-fA-F]+)"
 
-PORT_TYPE = {'02000000': 'LVDS', '04000000': 'DDVI', '80000000': 'SVIDEO',
-             '10000000': 'VGA', '00020000': 'SDVI', '00040000': 'DP',
+PORT_TYPE = {'02000000': 'LVDS', '04000000': 'DVI-DL', '80000000': 'S-Video',
+             '10000000': 'VGA', '00020000': 'DVI-SL', '00040000': 'DP',
              '00080000': 'HDMI', '00100000': 'DMS-59'}
 
 
@@ -76,11 +76,13 @@ def ports_reader(personalities, kext_path):
         for hexinfo in personalities:
             ports = []
             start_offset = int(hexinfo['addr'], 16) + int(hexinfo['offset'], 16)
+            print("\n@", start_offset, 'hexdump:')
             bin_data.seek(start_offset)
             for i in range(hexinfo['ports'], 0, -1):
                 blob = bin_data.read(24)
-                data = struct.unpack('>iiiiii', blob)
-                #print(struct.unpack('iiiiii', blob))
+                #print(repr(blob))
+                data = struct.unpack('>IIHHHHBBBBI', blob)
+                print("<{0:08x} {1:08x} {2:04x} {3:04x} {6:02x} {7:02x} {8:02x} {9:02x}>".format(*data))
 
                 port_code = "{0:08x}".format(data[0])
                 if port_code in PORT_TYPE.keys():
