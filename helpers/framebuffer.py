@@ -22,7 +22,7 @@ REG_MOVB = r"(movb)\s+\$(0x[0-9a-fA-F]+)"
 
 PORT_TYPE = {'02000000': 'LVDS', '04000000': 'DVI-DL', '80000000': 'S-Video',
              '10000000': 'VGA', '00020000': 'DVI-SL', '00040000': 'DP',
-             '00080000': 'HDMI', '00100000': 'DMS-59'}
+             '00080000': 'HDMI', '00100000': 'Mini-DVI'}
 
 
 def controller_kext_dis(kext_path):
