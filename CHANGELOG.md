@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - framebuffer personalities extractor
 
+## [0.1.6] - 2017-06-21
+### Changed
+- Output for macOS 10.12.6 beta4 (16G18a)
+- Pciid DB updates
+
 ## [0.1.5] - 2017-06-15
 ### Changed
 - All pci id values stored as integers
