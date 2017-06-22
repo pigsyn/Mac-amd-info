@@ -72,10 +72,10 @@ def display_kext_info(kexts_paths, pci_ids):
         print("")
 
 
-def write_output(kexts_paths, pci_ids, output_path='output.md', write_mode='w'):
+def write_output(kexts_paths, pci_ids, output_path='output.md'):
     """ Write output to file, markdown format """
 
-    with open(output_path, write_mode) as output:
+    with open(output_path, 'w') as output:
         for path in sorted(kexts_paths, key=unicode.lower):
             kext_name = path.split('/')[-3]
             macos_amd_devices = read_amd_plist(path)
@@ -135,29 +135,22 @@ if __name__ == '__main__':
             KEXTS.extend(CONTROLLER_KEXTS)
         if ARGS.g:
             KEXTS.extend(GRAPHIC_KEXTS)
+
     if ARGS.filters: # prune kext list when regex is provided
         FILTERS = [re.compile(regex) for regex in ARGS.filters]
+        MATCH_KEXT = []
         for regex in FILTERS:
-            KEXTS = filter(regex.search, KEXTS)
+            TMP_KEXTS = filter(regex.search, KEXTS)
+            MATCH_KEXT.extend(TMP_KEXTS)
+        KEXTS = set(MATCH_KEXT) # don't want duplicates
+
     if not KEXTS:
         print('No kext found with provided parameters: {}'.format(' '.join(sys.argv)))
         sys.exit(1)
 
-    # write all output
-    if ARGS.filename and not ARGS.filters and DEFAULTS_PARMS:
+    # write or display output
+    if not DISPLAY:
         write_output(KEXTS, AMD_DEVICES, ARGS.filename)
         print("Updated output in {}".format(ARGS.filename))
-    # write output by filters
-    elif ARGS.filename and ARGS.filters:
-        write_output(KEXTS, AMD_DEVICES, ARGS.filename, 'w')
-        print("Updated output in {}".format(ARGS.filename))
-    # write output by kext types
-    elif (KEXTS and not DEFAULTS_PARMS) and not DISPLAY:
-        write_output(KEXTS, AMD_DEVICES, ARGS.filename, 'w')
-        print("Updated output in {}".format(ARGS.filename))
-    # display output
     else:
-        if not ARGS.filters and DISPLAY:
-            display_kext_info(KEXTS, AMD_DEVICES)
-        if ARGS.filters and DISPLAY:
-            display_kext_info(KEXTS, AMD_DEVICES)
+        display_kext_info(KEXTS, AMD_DEVICES)
