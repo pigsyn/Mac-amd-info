@@ -7,28 +7,43 @@ PCI ID Vendor/Device database collector
 
 from __future__ import unicode_literals
 from __future__ import print_function
+import json
 import sys
+import os
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 try:
     import requests
-    import lxml
+    import lxml # pylint: disable=unused-import
     from bs4 import BeautifulSoup
 except ImportError:
     print("This tool needs community packages, please install beautifulsoup4, lxml and requests")
     print("pip install lxml beautifulsoup4 requests")
     sys.exit(1)
 
+# module globals
+SCRIPT_PATH = os.path.dirname(__file__)
+DIRPATH = (os.path.abspath(SCRIPT_PATH))
+JSON_PATH = '/'.join([DIRPATH, 'pciids.json'])
+
 def get_vendor_pciids(vendor_id='1002'):
     """
     Extract PCI IDS from https://pci-ids.ucw.cz database
     Returned object is a dictionnary
     """
+
     base_url = 'https://pci-ids.ucw.cz/read/PC/'
     url = base_url + vendor_id
     device_list = {}
-    result = requests.get(url)
+    try:
+        result = requests.get(url, timeout=3)
+    except requests.exceptions.Timeout:
+        print("No internet connection, loading local file ...")
+        with open(JSON_PATH, 'r') as local_file:
+            local_device_list = json.load(local_file)
+            return {int(k):v for k, v in local_device_list.items()}
+
     html_content = result.text
     soup = BeautifulSoup(html_content, 'lxml')
 
@@ -44,6 +59,7 @@ def get_vendor_pciids(vendor_id='1002'):
     return device_list
 
 if __name__ == '__main__':
-    # implement error handling
     IDS = get_vendor_pciids()
+    with open(JSON_PATH, 'w') as file_dump:
+        json.dump(IDS, file_dump, indent=4, sort_keys=True)
     print(IDS)

@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - framebuffer personalities extractor
 
+## [0.1.7] - 2017-06-24
+### Added
+- Script argument parser
+- Local Pciid json used on timeout
+
+### Changed
+- Updated README.md documentation
+
 ## [0.1.6] - 2017-06-21
 ### Changed
 - Output for macOS 10.12.6 beta4 (16G18a)

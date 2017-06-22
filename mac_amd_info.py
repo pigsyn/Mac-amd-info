@@ -10,9 +10,12 @@ from __future__ import print_function
 import plistlib
 import glob
 import re
+import argparse
+import sys
+import os
 from helpers.pciids_repo import get_vendor_pciids
 
-__version__ = '0.1.5'
+__version__ = '0.1.7'
 
 def read_amd_plist(kext_path):
     """ Scan kext plist and exctract pciid data """
@@ -31,7 +34,7 @@ def read_amd_plist(kext_path):
         if any(regex.match(controller) for regex in plist_filter):
 
             if 'IOPCIMatch' in personalities[controller].keys():
-            # just need 2 bytes from device, as a string
+            # just need 2 bytes from device string
                 ids = personalities[controller]['IOPCIMatch']
                 ids = hex_to_int(ids.replace('1002', '').split())
                 device_list.extend(ids)
@@ -43,7 +46,6 @@ def read_amd_plist(kext_path):
                 else:
                     ids = int(ids.split(',')[1], 16)
                     device_list.append(ids)
-
 
     return device_list
 
@@ -57,7 +59,7 @@ def hex_to_int(string_list):
 def display_kext_info(kexts_paths, pci_ids):
     """ Compares macOS amd kext devices to online pci ids DB and print output """
 
-    for path in sorted(kexts_paths):
+    for path in sorted(kexts_paths, key=unicode.lower):
         kext_name = path.split('/')[-3]
         macos_amd_devices = read_amd_plist(path)
         print('### {}'.format(kext_name))
@@ -70,14 +72,92 @@ def display_kext_info(kexts_paths, pci_ids):
         print("")
 
 
+def write_output(kexts_paths, pci_ids, output_path='output.md', write_mode='w'):
+    """ Write output to file, markdown format """
+
+    with open(output_path, write_mode) as output:
+        for path in sorted(kexts_paths, key=unicode.lower):
+            kext_name = path.split('/')[-3]
+            macos_amd_devices = read_amd_plist(path)
+            output.write('### {}\n'.format(kext_name))
+            for device in sorted(macos_amd_devices):
+                if device in pci_ids.keys():
+                    description = pci_ids[device]
+                else:
+                    description = 'unknown device'
+                output.write("* pci device: {:x} - {}\n".format(device, description))
+            output.write("\n")
+
+
 if __name__ == '__main__':
-    # implement error handling
+    # cli options
+    PARSER = argparse.ArgumentParser(description='Report human readable informations about AMD GPU',
+                                     formatter_class=argparse.RawTextHelpFormatter)
+    PARSER.add_argument('-V', '--version', action='version',
+                        version='%(prog)s {}'.format(__version__))
+    PARSER.add_argument('--output', const='output.md', nargs='?',
+                        dest='filename',
+                        help='write output to file, default is output.md')
+    PARSER.add_argument('-f', '--filter', nargs='+', dest='filters',
+                        help=R'''show kexts matching a python regex pattern, -f 2.00 shows only 2*00 series controllers''') # pylint: disable=line-too-long
+    PARSER.add_argument('-l', action='store_true', default=False, help='show Legacy kexts')
+    PARSER.add_argument('-c', action='store_true', help='show Controllers kexts')
+    PARSER.add_argument('-g', action='store_true', help='show Graphic Accelerators kexts')
+    ARGS = PARSER.parse_args()
+
+    # Script Globals
+    SCRIPT_PATH = os.path.dirname(__file__)
+    DIRPATH = (os.path.abspath(SCRIPT_PATH))
     KEXTS_PATHS = '/System/Library/Extensions/'
     LEGACY_KEXT = glob.glob(KEXTS_PATHS + 'AMDLegacySupport.kext/Contents/Info.plist')
     CONTROLLER_KEXTS = glob.glob(KEXTS_PATHS + 'AMD*Controller.kext/Contents/Info.plist')
     GRAPHIC_KEXTS = glob.glob(KEXTS_PATHS + 'AMDRadeonX*.kext/Contents/Info.plist')
-
+    ALL_KEXTS = LEGACY_KEXT + CONTROLLER_KEXTS + GRAPHIC_KEXTS
     AMD_DEVICES = get_vendor_pciids('1002') # 1002 is AMD
-    display_kext_info(LEGACY_KEXT, AMD_DEVICES)
-    display_kext_info(CONTROLLER_KEXTS, AMD_DEVICES)
-    display_kext_info(GRAPHIC_KEXTS, AMD_DEVICES)
+
+    # options handling
+    if ARGS.filename:
+        DISPLAY = False # don't print to stdout if filename is provided
+    else:
+        DISPLAY = True
+
+    # look for generic dumping or kext types combination
+    # if no parameters, show all kexts except legacy one
+    DEFAULTS_PARMS = (not ARGS.l and not ARGS.c and not ARGS.g)
+
+    if DEFAULTS_PARMS:
+        KEXTS = CONTROLLER_KEXTS + GRAPHIC_KEXTS
+    else:
+        KEXTS = []
+        if ARGS.l:
+            KEXTS.extend(LEGACY_KEXT)
+        if ARGS.c:
+            KEXTS.extend(CONTROLLER_KEXTS)
+        if ARGS.g:
+            KEXTS.extend(GRAPHIC_KEXTS)
+    if ARGS.filters: # prune kext list when regex is provided
+        FILTERS = [re.compile(regex) for regex in ARGS.filters]
+        for regex in FILTERS:
+            KEXTS = filter(regex.search, KEXTS)
+    if not KEXTS:
+        print('No kext found with provided parameters: {}'.format(' '.join(sys.argv)))
+        sys.exit(1)
+
+    # write all output
+    if ARGS.filename and not ARGS.filters and DEFAULTS_PARMS:
+        write_output(KEXTS, AMD_DEVICES, ARGS.filename)
+        print("Updated output in {}".format(ARGS.filename))
+    # write output by filters
+    elif ARGS.filename and ARGS.filters:
+        write_output(KEXTS, AMD_DEVICES, ARGS.filename, 'w')
+        print("Updated output in {}".format(ARGS.filename))
+    # write output by kext types
+    elif (KEXTS and not DEFAULTS_PARMS) and not DISPLAY:
+        write_output(KEXTS, AMD_DEVICES, ARGS.filename, 'w')
+        print("Updated output in {}".format(ARGS.filename))
+    # display output
+    else:
+        if not ARGS.filters and DISPLAY:
+            display_kext_info(KEXTS, AMD_DEVICES)
+        if ARGS.filters and DISPLAY:
+            display_kext_info(KEXTS, AMD_DEVICES)
