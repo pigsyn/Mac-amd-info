@@ -31,10 +31,11 @@ cd /path/to/Mac-amd-info
   -l                    show Legacy kexts
   -c                    show Controllers kexts
   -g                    show Graphic Accelerators kexts
+  -s                    show HW Services kexts
 ```
 * Filter examples
 ```bash
-# show 95**Controller.kext  and AMDRadeonX4000.kext AMDRadeonX4100.kext
+# show 95**Controller.kext, AMDRadeonX4000.kext and AMDRadeonX4100.kext
 ./mac_amd_info.py -c -g -f 95..Controller RadeonX4[0-1]00
 
 # show AMD7000Controller.kext 
