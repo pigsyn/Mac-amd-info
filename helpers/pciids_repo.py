@@ -25,7 +25,7 @@ def get_vendor_pciids(vendor_id='1002'):
     Extract PCI IDS from https://pci-ids.ucw.cz database
     Returned object is a dictionnary
     """
-    base_url = 'https://pci-ids.ucw.cz/read/PC/'
+    base_url = 'http://pci-ids.ucw.cz/read/PC/'
     url = base_url + vendor_id
     device_list = {}
     result = requests.get(url)
