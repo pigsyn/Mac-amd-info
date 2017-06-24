@@ -11,7 +11,7 @@ import json
 import sys
 import os
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 try:
     import requests
@@ -33,13 +33,13 @@ def get_vendor_pciids(vendor_id='1002'):
     Returned object is a dictionnary
     """
 
-    base_url = 'http://pci-ids.ucw.cz/read/PC/'
+    base_url = 'https://pci-ids.ucw.cz/read/PC/'
     url = base_url + vendor_id
     device_list = {}
     try:
         result = requests.get(url, timeout=3)
-    except requests.exceptions.Timeout:
-        print("No internet connection, loading local file ...")
+    except BaseException:
+        print('Could not reach <{}>\nLoading local json file ...\n'.format(url))
         with open(JSON_PATH, 'r') as local_file:
             local_device_list = json.load(local_file)
             return {int(k):v for k, v in local_device_list.items()}
@@ -59,6 +59,7 @@ def get_vendor_pciids(vendor_id='1002'):
     return device_list
 
 if __name__ == '__main__':
+    # tries to refresh local json
     IDS = get_vendor_pciids()
     with open(JSON_PATH, 'w') as file_dump:
         json.dump(IDS, file_dump, indent=4, sort_keys=True)

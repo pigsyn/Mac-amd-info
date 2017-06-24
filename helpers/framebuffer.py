@@ -9,7 +9,9 @@ from __future__ import unicode_literals
 from __future__ import print_function
 import glob
 from subprocess import Popen, PIPE
+import sys
 import re
+import os
 import struct
 
 __version__ = '0.0.1'
@@ -24,6 +26,7 @@ PORT_TYPE = {'02000000': 'LVDS', '04000000': 'DVI-DL', '80000000': 'S-Video',
              '10000000': 'VGA', '00020000': 'DVI-SL', '00040000': 'DP',
              '00080000': 'HDMI', '00100000': 'Mini-DVI'}
 
+DARWIN_VERSION = os.uname()[2]
 
 def controller_kext_dis(kext_path):
     """
@@ -70,6 +73,8 @@ def ports_reader(personalities, kext_path):
     """
     Read binary data offsets and extract available ports
     """
+    if DARWIN_VERSION < '16':
+        sys.exit('macOS version before Sierra not yet supported')
     kext_blob = kext_path
 
     with open(kext_blob, 'rb') as bin_data:
@@ -78,11 +83,12 @@ def ports_reader(personalities, kext_path):
             start_offset = int(hexinfo['addr'], 16) + int(hexinfo['offset'], 16)
             print("\n@", start_offset, 'hexdump:')
             bin_data.seek(start_offset)
-            for i in range(hexinfo['ports'], 0, -1):
+            for _ports in range(hexinfo['ports'], 0, -1):
                 blob = bin_data.read(24)
                 #print(repr(blob))
                 data = struct.unpack('>IIHHHHBBBBI', blob)
-                print("<{0:08x} {1:08x} {2:04x} {3:04x} {6:02x} {7:02x} {8:02x} {9:02x}>".format(*data))
+                print("<{0:08x} {1:08x} {2:04x} {3:04x} {6:02x} {7:02x} {8:02x} {9:02x}>"
+                      .format(*data))
 
                 port_code = "{0:08x}".format(data[0])
                 if port_code in PORT_TYPE.keys():
