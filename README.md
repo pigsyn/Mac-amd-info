@@ -13,6 +13,10 @@ If you don't have pip available:
 sudo easy_install pip
 sudo pip install beautifulsoup4 lxml requests
 ```
+* command line developer tools
+```bash
+xcode-select --install
+```
 
 ## Usage
 * open terminal 
