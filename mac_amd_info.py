@@ -5,17 +5,19 @@
 Simple tool that report human readable informations about macOS supported AMD GPU's
 """
 
-from __future__ import unicode_literals
 from __future__ import print_function
-import glob
-import re
-import argparse
-import sys
-import os
-from helpers.pciids_repo import get_vendor_pciids
-from helpers.kext_reader import display_kext_info, output_kext_info
+from __future__ import unicode_literals
 
-__version__ = '0.1.7'
+import argparse
+import glob
+import os
+import re
+import sys
+
+from helpers.kext_reader import display_kext_info, output_kext_info
+from helpers.pciids_db import VendorPciid
+
+__version__ = '0.1.8'
 
 
 # cli options
@@ -41,7 +43,7 @@ KEXTS_PATHS = '/System/Library/Extensions/'
 DARWIN_VERSION = os.uname()[2]
 
 AMD_KEXTS = glob.glob(KEXTS_PATHS + 'AMD*.kext')
-AMD_DEVICES = get_vendor_pciids('1002')
+AMD_DEVICES = VendorPciid('1002').get_vendor_pciids()
 
 # kext regexes
 LEGACY = re.compile('AMDLegacySupport.kext')

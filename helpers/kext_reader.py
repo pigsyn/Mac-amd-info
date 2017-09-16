@@ -13,7 +13,6 @@ import os
 
 __version__ = '0.0.1'
 
-
 # module globals
 SCRIPT_PATH = os.path.dirname(__file__)
 DIRPATH = (os.path.abspath(SCRIPT_PATH))
@@ -37,18 +36,18 @@ def read_kext_plist(kext_path):
         for k in personalities['Controller'].keys():
             if k.startswith('ATY'):
                 fb_names.append(k.split(',')[1])
-    #print(' '.join(fb_names))
+    # print(' '.join(fb_names))
 
     for controller in personalities.keys():
         if any(regex.match(controller) for regex in plist_filter):
             if 'IOPCIMatch' in personalities[controller].keys():
-            # just need 2 bytes from device string
+                # just need 2 bytes from device string
                 ids = personalities[controller]['IOPCIMatch']
                 ids = str_to_int(ids.replace('1002', '').split())
                 device_list.extend(ids)
-            else: # older amd plist files have different structure
-                ids = personalities[controller]['IONameMatch']#.split(','))
-                if isinstance(ids, list): # even older kexts have multiple strings tags
+            else:  # older amd plist files have different structure
+                ids = personalities[controller]['IONameMatch']  # .split(','))
+                if isinstance(ids, list):  # even older kexts have multiple strings tags
                     ids = str_to_int([i.replace('pci1002,', '') for i in ids])
                     device_list.extend(ids)
                 else:
@@ -84,7 +83,7 @@ def display_kext_info(kexts_paths, pci_ids):
             else:
                 description = 'unknown device'
             output += '* pci device: {:x} - {}\n'.format(device, description)
-        #if macos_amd_devices['personalities']:
+        # if macos_amd_devices['personalities']:
         #    print("* personalities: {}".format(', '.join(macos_amd_devices['personalities'])))
         output += '\n'
     return output

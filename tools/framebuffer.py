@@ -28,6 +28,7 @@ PORT_TYPE = {'02000000': 'LVDS', '04000000': 'DVI-DL', '80000000': 'S-Video',
 
 DARWIN_VERSION = os.uname()[2]
 
+
 def controller_kext_dis(kext_path):
     """
     Otool wrapper, disassemble file
@@ -46,7 +47,7 @@ def addr_lookup(dump_file):
     personalities = []
     for line in dump_file.split('\n'):
         fb_name = re.search(REG_NAME, line)
-        if fb_name: # only do stuff once we have a FB name
+        if fb_name:  # only do stuff once we have a FB name
             tmp_fb['name'] = fb_name.group(2)
         elif 'name' in tmp_fb.keys():
             fb_leaq = re.search(REG_LEAQ, line)
@@ -59,7 +60,7 @@ def addr_lookup(dump_file):
                 tmp_fb['ports'] = int(fb_port.group(2), 16)
             if fb_off:
                 tmp_fb['offset'] = hex(int(fb_off.group(2), 16) + 0x1a)
-            if stop: # detected return addr, section complete
+            if stop:  # detected return addr, section complete
                 personalities.append(tmp_fb)
                 tmp_fb = {}
                 del stop
@@ -85,7 +86,7 @@ def ports_reader(personalities, kext_path):
             bin_data.seek(start_offset)
             for _ports in range(hexinfo['ports'], 0, -1):
                 blob = bin_data.read(24)
-                #print(repr(blob))
+                # print(repr(blob))
                 data = struct.unpack('>IIHHHHBBBBI', blob)
                 print("<{0:08x} {1:08x} {2:04x} {3:04x} {6:02x} {7:02x} {8:02x} {9:02x}>"
                       .format(*data))
@@ -95,7 +96,6 @@ def ports_reader(personalities, kext_path):
                     ports.append(PORT_TYPE[port_code])
 
             print("* {}: {}".format(hexinfo['name'], ", ".join(ports)))
-
 
 
 if __name__ == '__main__':
