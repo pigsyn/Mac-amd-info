@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.8] - 2017-09-16
+### Added
+- tools/json_update.py
+- helpers/common.py
+
+### Changed
+- Refactor all project typos
+- Project structure cleanup
+
 ## [0.1.7] - 2017-06-24
 ### Added
 - Script argument parser and help menu

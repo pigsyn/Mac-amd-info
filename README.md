@@ -50,4 +50,4 @@ cd /path/to/Mac-amd-info
 
 See [`output.md`][output.md]
 
-[output.md]: ./output.md
+[output.md]: data/output.md
