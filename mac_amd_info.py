@@ -9,13 +9,12 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
-import glob
-import os
-import re
 import sys
-
+import re
 from helpers.kext_reader import display_kext_info, output_kext_info
 from helpers.pciids_db import VendorPciid
+from helpers.common import (LEGACY_KEXT, CONTROLLER_KEXTS, GRAPHICS_KEXTS,
+                            HW_SERVICES_KEXTS, DEFAULT_OUTPUT)
 
 __version__ = '0.1.8'
 
@@ -25,7 +24,7 @@ PARSER = argparse.ArgumentParser(description='Report human readable informations
                                  formatter_class=argparse.RawTextHelpFormatter)
 PARSER.add_argument('-V', '--version', action='version',
                     version='%(prog)s {}'.format(__version__))
-PARSER.add_argument('--output', const='output.md', nargs='?',
+PARSER.add_argument('--output', const=DEFAULT_OUTPUT, nargs='?',
                     dest='filename',
                     help='write output to file, default is output.md')
 PARSER.add_argument('-f', '--filter', nargs='+', dest='filters',
@@ -36,27 +35,8 @@ PARSER.add_argument('-g', action='store_true', help='show Graphic Accelerators k
 PARSER.add_argument('-s', action='store_true', help='show HW Services kexts')
 ARGS = PARSER.parse_args()
 
-# Script Globals
-SCRIPT_PATH = os.path.dirname(__file__)
-DIRPATH = (os.path.abspath(SCRIPT_PATH))
-KEXTS_PATHS = '/System/Library/Extensions/'
-DARWIN_VERSION = os.uname()[2]
-
-AMD_KEXTS = glob.glob(KEXTS_PATHS + 'AMD*.kext')
+# pci ids parser
 AMD_DEVICES = VendorPciid('1002').get_vendor_pciids()
-
-# kext regexes
-LEGACY = re.compile('AMDLegacySupport.kext')
-CONTROLLER = re.compile('AMD[0-9]{4,5}Controller.kext')
-GRAPHICS = re.compile('AMDRadeonX[0-9]{4,5}.kext')
-HW_SERVICE = re.compile('AMDRadeonX[0-9]{4,5}HWServices.kext')
-
-# kext families
-LEGACY_KEXT = filter(LEGACY.search, AMD_KEXTS)
-CONTROLLER_KEXTS = filter(CONTROLLER.search, AMD_KEXTS)
-GRAPHICS_KEXTS = filter(GRAPHICS.search, AMD_KEXTS)
-HW_SERVICES_KEXTS = filter(HW_SERVICE.search, AMD_KEXTS)
-ALL_KEXTS = LEGACY_KEXT + CONTROLLER_KEXTS + GRAPHICS_KEXTS + HW_SERVICES_KEXTS
 
 # options handling
 if ARGS.filename:

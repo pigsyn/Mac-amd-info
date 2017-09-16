@@ -1,4 +1,3 @@
-#!/usr/bin/env python2.7
 # -*- coding: utf-8 -*
 
 """
@@ -9,7 +8,7 @@ from __future__ import unicode_literals
 from __future__ import print_function
 import json
 import sys
-import os
+from helpers.common import JSON_PATH
 
 __version__ = '0.1.0'
 
@@ -21,11 +20,6 @@ except ImportError:
     print("This tool needs community packages, please install beautifulsoup4, lxml and requests")
     print("pip install lxml beautifulsoup4 requests")
     sys.exit(1)
-
-# module globals
-SCRIPT_PATH = os.path.dirname(__file__)
-DIRPATH = (os.path.abspath(SCRIPT_PATH))
-JSON_PATH = '/'.join([DIRPATH, 'pciids.json'])
 
 
 class VendorPciid(object):
@@ -48,7 +42,7 @@ class VendorPciid(object):
             result = requests.get(self.url, timeout=3)
         except BaseException:
             print('Could not access {}, loading local json file ...'.format(self.url))
-            return self.local_json_load()
+            return self.load_local_json()
         html_content = result.text
         soup = BeautifulSoup(html_content, 'lxml')
 
@@ -63,7 +57,7 @@ class VendorPciid(object):
 
         return self.device_list
 
-    def local_json_load(self):
+    def load_local_json(self):
         """ Load local json file """
         self.save_json = False
         with open(self.json_path, 'r') as local_file:

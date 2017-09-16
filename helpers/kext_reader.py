@@ -1,21 +1,16 @@
-#!/usr/bin/env python2.7
 # -*- coding: utf-8 -*
 
 """
-AMD Kext reader and extractor
+AMD Kext parser
 """
 
 from __future__ import unicode_literals
 from __future__ import print_function
 import re
 import plistlib
-import os
+from helpers.common import natural_sort, str_to_int
 
-__version__ = '0.0.1'
-
-# module globals
-SCRIPT_PATH = os.path.dirname(__file__)
-DIRPATH = (os.path.abspath(SCRIPT_PATH))
+__version__ = '0.0.2'
 
 
 def read_kext_plist(kext_path):
@@ -55,17 +50,6 @@ def read_kext_plist(kext_path):
                     device_list.append(ids)
 
     return {'name': kext_name, 'devices': device_list, 'personalities': fb_names}
-
-
-def natural_sort(string_):
-    """ Human expected alnum sort """
-    return [int(s) if s.isdecimal() else s for s in re.split(r'(\d+)', string_)]
-
-
-def str_to_int(string_list):
-    """ convert list of hex strings into list of ints """
-    int_list = [int(x, 16) for x in string_list]
-    return int_list
 
 
 def display_kext_info(kexts_paths, pci_ids):
