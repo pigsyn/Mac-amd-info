@@ -109,28 +109,28 @@
 * pci device: 67c0 - Ellesmere [Radeon Pro WX 7100]
 * pci device: 67df - Ellesmere [Radeon RX 470/480/570/580]
 * pci device: 67e0 - Baffin [Polaris11]
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 * pci device: 67ff - Baffin [Radeon RX 560]
 
 ### AMD9510Controller.kext
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 
 ### AMD9515Controller.kext
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 
 ### AMD9520Controller.kext
 * pci device: 67c0 - Ellesmere [Radeon Pro WX 7100]
 * pci device: 67df - Ellesmere [Radeon RX 470/480/570/580]
 * pci device: 67e0 - Baffin [Polaris11]
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 * pci device: 67ff - Baffin [Radeon RX 560]
 
 ### AMD10000Controller.kext
 * pci device: 6860 - unknown device
-* pci device: 6863 - Vega 10 [Radeon Vega Frontier Edition]
+* pci device: 6863 - Vega 10 XTX [Radeon Vega Frontier Edition]
 * pci device: 6864 - unknown device
 * pci device: 6867 - unknown device
-* pci device: 687f - Vega [Radeon RX Vega]
+* pci device: 687f - Vega 10 XT [Radeon RX Vega 64]
 
 ### AMDRadeonX3000.kext
 * pci device: 6720 - Blackcomb [Radeon HD 6970M/6990M]
@@ -208,18 +208,18 @@
 
 ### AMDRadeonX4100.kext
 * pci device: 67e0 - Baffin [Polaris11]
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 * pci device: 67ff - Baffin [Radeon RX 560]
 
 ### AMDRadeonX4150.kext
 * pci device: 67e0 - Baffin [Polaris11]
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 * pci device: 67ff - Baffin [Radeon RX 560]
 
 ### AMDRadeonX4200.kext
 * pci device: 67c0 - Ellesmere [Radeon Pro WX 7100]
 * pci device: 67df - Ellesmere [Radeon RX 470/480/570/580]
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 * pci device: 67ff - Baffin [Radeon RX 560]
 
 ### AMDRadeonX4250.kext
@@ -242,23 +242,23 @@
 * pci device: 67e8 - Baffin [Polaris11]
 * pci device: 67e9 - Baffin [Polaris11]
 * pci device: 67eb - Baffin [Polaris11]
-* pci device: 67ef - Baffin [Radeon RX 460]
+* pci device: 67ef - Baffin [Radeon RX 460/560D / Pro 450/455/460/560]
 * pci device: 67ff - Baffin [Radeon RX 560]
 
 ### AMDRadeonX5000.kext
 * pci device: 6860 - unknown device
-* pci device: 6863 - Vega 10 [Radeon Vega Frontier Edition]
+* pci device: 6863 - Vega 10 XTX [Radeon Vega Frontier Edition]
 * pci device: 6864 - unknown device
 * pci device: 6867 - unknown device
-* pci device: 687f - Vega [Radeon RX Vega]
+* pci device: 687f - Vega 10 XT [Radeon RX Vega 64]
 
 ### AMDRadeonX5000HWServices.kext
 * pci device: 6860 - unknown device
 * pci device: 6861 - unknown device
 * pci device: 6862 - unknown device
-* pci device: 6863 - Vega 10 [Radeon Vega Frontier Edition]
+* pci device: 6863 - Vega 10 XTX [Radeon Vega Frontier Edition]
 * pci device: 6864 - unknown device
 * pci device: 6867 - unknown device
 * pci device: 686c - unknown device
-* pci device: 687f - Vega [Radeon RX Vega]
+* pci device: 687f - Vega 10 XT [Radeon RX Vega 64]
 
