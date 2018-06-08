@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.9] - 2018-06-08
+### Fixed 
+- REGEX for HWServices Kexts
+
+### Changed
+- PCI IDS parser is now a class
+- Output for macOS 10.13.5 
+- Code cleanup and directory structure
+
 ## [0.1.8] - 2017-09-16
 ### Added
 - tools/json_update.py

@@ -24,6 +24,6 @@ if __name__ == '__main__':
     PCIIDS = IDS.get_vendor_pciids()
     print('{}: {}'.format('Can update json', IDS.save_json))
     if IDS.save_json:
-        print('Saving JSON under: {}'.format(IDS.json_path))
+        print('Saving JSON under: {}'.format(JSON_PATH))
         with open(JSON_PATH, 'w') as file_dump:
             json.dump(PCIIDS, file_dump, indent=4, sort_keys=True)

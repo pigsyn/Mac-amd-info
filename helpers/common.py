@@ -9,7 +9,7 @@ import os
 import re
 import glob
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 # get absolute path
 CUR_PATH = os.path.dirname(__file__)
@@ -32,6 +32,12 @@ LEGACY = re.compile('AMDLegacySupport.kext')
 CONTROLLER = re.compile('AMD[0-9]{4,5}Controller.kext')
 GRAPHICS = re.compile('AMDRadeonX[0-9]{4,5}.kext')
 HW_SERVICE = re.compile('AMDRadeonX[0-9]{4,5}HWServices.kext')
+PLIST_FILTER = [
+    re.compile('Controller'),
+    re.compile('.*GraphicsAccelerator'),
+    re.compile('ATI Support'),
+    re.compile('.*HW Services'),
+    re.compile('AMD Radeon.*Services')]
 
 # kext families
 LEGACY_KEXT = filter(LEGACY.search, AMD_KEXTS)

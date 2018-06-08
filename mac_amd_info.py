@@ -5,9 +5,7 @@
 Simple tool that report human readable informations about macOS supported AMD GPU's
 """
 
-from __future__ import print_function
-from __future__ import unicode_literals
-
+from __future__ import unicode_literals, print_function
 import argparse
 import sys
 import re
@@ -16,7 +14,7 @@ from helpers.pciids_db import VendorPciid
 from helpers.common import (LEGACY_KEXT, CONTROLLER_KEXTS, GRAPHICS_KEXTS,
                             HW_SERVICES_KEXTS, DEFAULT_OUTPUT)
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 
 # cli options

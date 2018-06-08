@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*
 
 """
-PCI ID Vendor/Device database collector
+PCI ID Vendor/Device database parser
 """
 
-from __future__ import unicode_literals
-from __future__ import print_function
+from __future__ import unicode_literals, print_function
 import json
 import sys
 from helpers.common import JSON_PATH
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 try:
     import requests
@@ -28,16 +27,16 @@ class VendorPciid(object):
     Returned object is a dictionnary
     """
 
-    def __init__(self, vendor_id='1002', json_path=JSON_PATH):
+    def __init__(self, vendor_id='1002', load_path=JSON_PATH):
         self.vendor_id = vendor_id
-        self.json_path = json_path
+        self.load_path = load_path
         self.base_url = 'https://pci-ids.ucw.cz/read/PC/'
         self.url = "{0}{1}".format(self.base_url, self.vendor_id)
         self.device_list = {}
         self.save_json = True
 
     def get_vendor_pciids(self):
-        """ Collect data from base_url """
+        """ Extracts table data from url """
         try:
             result = requests.get(self.url, timeout=3)
         except BaseException:
@@ -60,6 +59,6 @@ class VendorPciid(object):
     def load_local_json(self):
         """ Load local json file """
         self.save_json = False
-        with open(self.json_path, 'r') as local_file:
+        with open(self.load_path, 'r') as local_file:
             local_device_list = json.load(local_file)
             return {int(k): v for k, v in local_device_list.items()}

@@ -4,13 +4,12 @@
 AMD Kext parser
 """
 
-from __future__ import unicode_literals
-from __future__ import print_function
+from __future__ import unicode_literals, print_function
 import re
 import plistlib
-from helpers.common import natural_sort, str_to_int
+from helpers.common import natural_sort, str_to_int, PLIST_FILTER
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 
 def read_kext_plist(kext_path):
@@ -18,12 +17,6 @@ def read_kext_plist(kext_path):
 
     kext_name = kext_path.split('/')[-1]
     plist_file = '/'.join([kext_path, 'Contents/Info.plist'])
-    plist_filter = [
-        re.compile('Controller'),
-        re.compile('.*GraphicsAccelerator'),
-        re.compile('ATI Support'),
-        re.compile('.*HW Services')]
-
     device_list = []
     personalities = plistlib.readPlist(plist_file)['IOKitPersonalities']
     fb_names = []
@@ -34,7 +27,7 @@ def read_kext_plist(kext_path):
     # print(' '.join(fb_names))
 
     for controller in personalities.keys():
-        if any(regex.match(controller) for regex in plist_filter):
+        if any(regex.match(controller) for regex in PLIST_FILTER):
             if 'IOPCIMatch' in personalities[controller].keys():
                 # just need 2 bytes from device string
                 ids = personalities[controller]['IOPCIMatch']
